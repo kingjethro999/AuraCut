@@ -50,6 +50,18 @@ Start the FastAPI server:
 ```bash
 ./venv/bin/python main.py
 ```
+### Running with Docker
+
+1. **Build the image:**
+   ```bash
+   docker build -t auracut .
+   ```
+
+2. **Run the container:**
+   ```bash
+   docker run -p 3000:3000 --env-file .env auracut
+   ```
+
 Open your browser and navigate to `http://localhost:3000`.
 
 ## 📖 API Documentation

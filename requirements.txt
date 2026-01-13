@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+rembg[cpu]
+appwrite
+python-dotenv
+pillow
+python-multipart
