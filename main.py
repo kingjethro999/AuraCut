@@ -23,9 +23,15 @@ databases = Databases(client)
 DB_ID = os.getenv("APPWRITE_DB_NAME")
 COLLECTION_ID = "api_keys" # Assuming this collection name
 
-# Initialize rembg session at startup for performance
-# 'birefnet-general' is the 2026 standard for professional-grade results
-session = new_session("birefnet-general")
+# Global session variable for lazy initialization
+session = None
+
+def get_session():
+    global session
+    if session is None:
+        # 'birefnet-general' is the 2026 standard for professional-grade results
+        session = new_session("birefnet-general")
+    return session
 
 # Helper to validate API Key against Appwrite
 async def validate_api_key(api_key: str = Header(...)):
@@ -60,7 +66,7 @@ async def remove_background(
         # alpha_matting: use alpha matting to get better edges
         output_image = remove(
             input_image,
-            session=session,
+            session=get_session(),
             alpha_matting=True,
             alpha_matting_foreground_threshold=240,
             alpha_matting_background_threshold=10,
