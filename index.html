@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraCut | High-End Background Removal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="auracut.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@400;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@14.0.0"></script>
+</head>
+
+<body class="dark-theme">
+    <div class="glow-sphere sphere-1"></div>
+    <div class="glow-sphere sphere-2"></div>
+
+    <nav>
+        <div class="logo">
+            <span class="gradient-text">AuraCut</span>
+        </div>
+        <div class="nav-links">
+            <button id="auth-btn" class="btn btn-secondary">Login with GitHub</button>
+        </div>
+    </nav>
+
+    <main>
+        <header>
+            <h1>Precision <span class="gradient-text">Background</span> Removal</h1>
+            <p>High-end AI processing for professionals. Fast, clean, and API-first.</p>
+        </header>
+
+        <section id="app-container" class="glass-container">
+            <div id="drop-zone" class="drop-zone">
+                <div class="drop-content">
+                    <div class="icon-wrapper">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                    </div>
+                    <h3>Drop your image here</h3>
+                    <p>or click to browse (JPG, PNG)</p>
+                </div>
+                <input type="file" id="file-input" hidden accept="image/*">
+            </div>
+
+            <div id="preview-panel" class="hidden">
+                <div class="preview-grid">
+                    <div class="preview-box">
+                        <label>Original</label>
+                        <img id="original-preview" src="" alt="Original">
+                    </div>
+                    <div class="preview-box">
+                        <label>Result</label>
+                        <div class="result-placeholder" id="result-placeholder">
+                            <div class="loader hidden" id="loader"></div>
+                            <img id="result-preview" class="hidden" src="" alt="Result">
+                        </div>
+                    </div>
+                </div>
+                <div class="action-bar">
+                    <button id="reset-btn" class="btn btn-outline">Upload Another</button>
+                    <a id="download-btn" class="btn btn-primary hidden">Download PNG</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="api-stats" class="hidden">
+            <div class="api-card glass-container">
+                <h3>Your API Key</h3>
+                <div class="key-display">
+                    <code id="api-key-value">••••••••••••••••</code>
+                    <button id="copy-key" class="btn-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
