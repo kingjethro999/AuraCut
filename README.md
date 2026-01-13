@@ -64,7 +64,20 @@ Start the FastAPI server:
 
 Open your browser and navigate to `http://localhost:3000`.
 
-## 📖 API Documentation
+## � Deployment
+
+### Deploying to Render.com
+
+The easiest way to deploy AuraCut is using **Docker**, as it ensures all system dependencies for image processing are correctly installed.
+
+1. **Create a new Web Service**: Select your GitHub repository.
+2. **Runtime**: Select **Docker**.
+3. **Environment Variables**: Add all keys from your `.env` file (e.g., `APPWRITE_PROJECT_ID`, etc.).
+4. **Port**: Render will automatically detect port `3000` from the `Dockerfile`.
+
+*Note: If you use the standard Python runtime, the **Build Command** would be `pip install -r requirements.txt` and the **Start Command** would be `python main.py`.*
+
+## �📖 API Documentation
 
 AuraCut provides a high-performance REST API for background removal.
 
