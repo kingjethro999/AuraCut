@@ -1,19 +1,19 @@
-// Appwrite Configuration (from .env values passed manually or fetched via endpoint)
-const client = new Appwrite.Client();
-const account = new Appwrite.Account(client);
-const databases = new Appwrite.Databases(client);
+// // Appwrite Configuration (from .env values passed manually or fetched via endpoint)
+// const client = new Appwrite.Client();
+// const account = new Appwrite.Account(client);
+// const databases = new Appwrite.Databases(client);
 
-// These should ideally be fetched from the backend or set during build
-// For now, using the values from .env directly for the demo
-const PROJECT_ID = "6965886800118cddfe97";
-const ENDPOINT = "https://fra.cloud.appwrite.io/v1";
+// // These should ideally be fetched from the backend or set during build
+// // For now, using the values from .env directly for the demo
+// const PROJECT_ID = "6965886800118cddfe97";
+// const ENDPOINT = "https://fra.cloud.appwrite.io/v1";
 
-client
-    .setEndpoint(ENDPOINT)
-    .setProject(PROJECT_ID);
+// client
+//     .setEndpoint(ENDPOINT)
+//     .setProject(PROJECT_ID);
 
 // DOM Elements
-const authBtn = document.getElementById('auth-btn');
+// const authBtn = document.getElementById('auth-btn');
 const dropZone = document.getElementById('drop-zone');
 const fileInput = document.getElementById('file-input');
 const appContainer = document.getElementById('app-container');
@@ -27,22 +27,22 @@ const apiStats = document.getElementById('api-stats');
 
 // --- Authentication ---
 
-async function checkAuth() {
-    try {
-        const user = await account.get();
-        authBtn.textContent = `Logged in as ${user.name || user.email}`;
-        apiStats.classList.remove('hidden');
-        // Fetch API key or other user stats here
-    } catch (error) {
-        console.log("Not logged in");
-        authBtn.textContent = "Login with GitHub";
-        apiStats.classList.add('hidden');
-    }
-}
+// async function checkAuth() {
+//     try {
+//         const user = await account.get();
+//         authBtn.textContent = `Logged in as ${user.name || user.email}`;
+//         apiStats.classList.remove('hidden');
+//         // Fetch API key or other user stats here
+//     } catch (error) {
+//         console.log("Not logged in");
+//         authBtn.textContent = "Login with GitHub";
+//         apiStats.classList.add('hidden');
+//     }
+// }
 
-authBtn.addEventListener('click', () => {
-    account.createOAuth2Session('github', 'http://localhost:3000', 'http://localhost:3000');
-});
+// authBtn.addEventListener('click', () => {
+//     account.createOAuth2Session('github', 'http://localhost:3000', 'http://localhost:3000');
+// });
 
 // --- Image Processing ---
 
@@ -127,4 +127,4 @@ resetBtn.addEventListener('click', () => {
 });
 
 // Init
-checkAuth();
+// checkAuth();
