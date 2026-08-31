@@ -1,0 +1,14 @@
+services:
+  auracut:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - APPWRITE_Project_ID=${APPWRITE_PROJECT_ID}
+      - APPWRITE_ENDPOINT=${APPWRITE_ENDPOINT}
+      - APPWRITE_API_KEY_SECRET=${APPWRITE_API_KEY_SECRET}
+      - APPWRITE_DB_NAME=${APPWRITE_DB_NAME}
+    volumes:
+      - .:/app
+    # Restart policy
+    restart: unless-stopped

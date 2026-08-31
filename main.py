@@ -6,49 +6,43 @@ from fastapi.staticfiles import StaticFiles
 from rembg import remove, new_session
 from PIL import Image
 from dotenv import load_dotenv
-from appwrite.client import Client
-from appwrite.services.databases import Databases
+# from appwrite.client import Client
+# from appwrite.services.databases import Databases
 
 load_dotenv()
 
 app = FastAPI(title="AuraCut API")
 
 # Appwrite Setup
-client = Client()
-client.set_endpoint(os.getenv("APPWRITE_ENDPOINT"))
-client.set_project(os.getenv("APPWRITE_PROJECT_ID"))
-client.set_key(os.getenv("APPWRITE_API_KEY_SECRET"))
+# client = Client()
+# client.set_endpoint(os.getenv("APPWRITE_ENDPOINT"))
+# client.set_project(os.getenv("APPWRITE_PROJECT_ID"))
+# client.set_key(os.getenv("APPWRITE_API_KEY_SECRET"))
 
-databases = Databases(client)
-DB_ID = os.getenv("APPWRITE_DB_NAME")
-COLLECTION_ID = "api_keys" # Assuming this collection name
+# databases = Databases(client)
+# DB_ID = os.getenv("APPWRITE_DB_NAME")
+# COLLECTION_ID = "api_keys" # Assuming this collection name
 
-# Global session variable for lazy initialization
-session = None
-
-def get_session():
-    global session
-    if session is None:
-        # 'birefnet-general' is the 2026 standard for professional-grade results
-        session = new_session("birefnet-general")
-    return session
+# Initialize rembg session at startup for performance
+# 'birefnet-general' is the 2026 standard for professional-grade results
+session = new_session("birefnet-general")
 
 # Helper to validate API Key against Appwrite
-async def validate_api_key(api_key: str = Header(...)):
-    try:
-        # Search for the API key in the 'api_keys' collection
-        # This is a simplified check. In a production app, you'd handle hashing and specific user mapping.
-        result = databases.list_documents(
-            database_id=DB_ID,
-            collection_id=COLLECTION_ID,
-            queries=[f'equal("key", ["{api_key}"])']
-        )
-        if result['total'] == 0:
-            raise HTTPException(status_code=403, detail="Invalid API Key")
-        return result['documents'][0]
-    except Exception as e:
-        print(f"Auth Error: {e}")
-        raise HTTPException(status_code=403, detail="Authentication Failed")
+# async def validate_api_key(api_key: str = Header(...)):
+#     try:
+#         # Search for the API key in the 'api_keys' collection
+#         # This is a simplified check. In a production app, you'd handle hashing and specific user mapping.
+#         result = databases.list_documents(
+#             database_id=DB_ID,
+#             collection_id=COLLECTION_ID,
+#             queries=[f'equal("key", ["{api_key}"])']
+#         )
+#         if result['total'] == 0:
+#             raise HTTPException(status_code=403, detail="Invalid API Key")
+#         return result['documents'][0]
+#     except Exception as e:
+#         print(f"Auth Error: {e}")
+#         raise HTTPException(status_code=403, detail="Authentication Failed")
 
 @app.post("/remove-bg")
 async def remove_background(
@@ -66,7 +60,7 @@ async def remove_background(
         # alpha_matting: use alpha matting to get better edges
         output_image = remove(
             input_image,
-            session=get_session(),
+            session=session,
             alpha_matting=True,
             alpha_matting_foreground_threshold=240,
             alpha_matting_background_threshold=10,
@@ -86,5 +80,4 @@ app.mount("/", StaticFiles(directory=".", html=True), name="static")
 
 if __name__ == "__main__":
     import uvicorn
-    port = int(os.getenv("PORT", 3000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    uvicorn.run(app, host="0.0.0.0", port=3000)
